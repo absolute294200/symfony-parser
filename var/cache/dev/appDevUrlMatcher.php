@@ -143,6 +143,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
             not_app_restrss_postrss:
 
+            // app_restrss_postrssdelete
+            if ($pathinfo === '/rss/delete') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_app_restrss_postrssdelete;
+                }
+
+                return array (  '_controller' => 'AppBundle\\Controller\\RestRssController::postRssDeleteAction',  '_route' => 'app_restrss_postrssdelete',);
+            }
+            not_app_restrss_postrssdelete:
+
         }
 
         // app_restuser_postlogin
@@ -235,6 +246,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                         return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_rss_post_rss')), array (  '_controller' => 'AppBundle\\Controller\\RestRssController::postRssAction',  '_format' => NULL,));
                     }
                     not_api_rss_post_rss:
+
+                    // api_rss_post_rss_delete
+                    if (0 === strpos($pathinfo, '/api/rss/delete') && preg_match('#^/api/rss/delete(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                        if ($this->context->getMethod() != 'POST') {
+                            $allow[] = 'POST';
+                            goto not_api_rss_post_rss_delete;
+                        }
+
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_rss_post_rss_delete')), array (  '_controller' => 'AppBundle\\Controller\\RestRssController::postRssDeleteAction',  '_format' => NULL,));
+                    }
+                    not_api_rss_post_rss_delete:
 
                 }
 

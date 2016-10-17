@@ -40,6 +40,12 @@ class Rss
      */
     private $channels;
 
+    public function __construct()
+    {
+
+        $this->channels = new ArrayCollection();
+
+    }
 
     /**
      * Get id
@@ -115,6 +121,14 @@ class Rss
     {
         $this->channels = $channels;
         return $this;
+    }
+
+    /**
+     * @param UserRss $channels
+     */
+    public function deleteChannel(UserRss $channel)
+    {
+        $this->channels->remove($channel);
     }
 
 

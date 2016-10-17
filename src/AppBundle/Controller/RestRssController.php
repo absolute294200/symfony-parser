@@ -91,15 +91,59 @@ class RestRssController extends FOSRestController
 
         if($user){
 
-            //var_dump(1);
+            $result_rss = $this->get('core.handler.rss')->checkUniqueUrl($form->getData()); //check please $result_rss
 
-            $result_rss = $this->get('core.handler.rss')->checkUniqueUrl($form->getData());
+            $this->get('core.handler.user_rss')->createUserRss($user, $result_rss); //check please returned value
 
-            //var_dump($result_rss);
+            return array('user_rss' => 1);
 
-            $result = $this->get('core.handler.user_rss')->createUserRss($user, $form->getData());
+        }else{
 
-            return array('user_rss' =>1);
+            return array('auth' => false);
+
+        }
+
+    }
+
+    /**
+     * This is the documentation description of your method, it will appear
+     * on a specific pane. It will read all the text until the first
+     * annotation.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  section="RSS",
+     *  description="Registration of user",
+     *  requirements={
+     *      {
+     *          "name"="limit",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Id of needle for deleting rss"
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="id_rss", "dataType"="integer", "required"=true, "description"="Id of rss"}
+     *  }
+     * )
+     * @Annotations\Post("/rss/delete")
+     */
+
+    public function postRssDeleteAction(Request $request)
+    {
+
+        $id_rss = $request->request->get('id_rss');
+
+        $token = $request->headers->get('X-AUTH-TOKEN');
+
+        $user = $this->get('core.handler.user')
+            ->getUserByToken($token);
+
+        if($user){
+
+            $this->get('core.handler.rss')->deleteRSS($id_rss);
+
+            return array('delete' => 1);
 
         }else{
 

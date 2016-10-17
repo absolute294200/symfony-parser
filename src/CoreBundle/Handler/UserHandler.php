@@ -79,12 +79,12 @@ class UserHandler
 
         $repository = $this->doctrine->getRepository('CoreBundle:User');
 
-        $product = $repository->findBy(array(
+        $user = $repository->findBy(array(
             'token' => $token
         ));
 
-        if($product)
-            $id_user = $product[0]->getId();
+        if($user)
+            $id_user = $user[0]->getId();
 
         return $id_user;
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
   <parameters>
-    <parameter key="kernel.root_dir">/usr/local/bin/parser/app</parameter>
+    <parameter key="kernel.root_dir">/usr/local/bin/parser/symfony-parser/app</parameter>
     <parameter key="kernel.environment">dev</parameter>
     <parameter key="kernel.debug">true</parameter>
     <parameter key="kernel.name">app</parameter>
-    <parameter key="kernel.cache_dir">/usr/local/bin/parser/var/cache/dev</parameter>
-    <parameter key="kernel.logs_dir">/usr/local/bin/parser/var/logs</parameter>
+    <parameter key="kernel.cache_dir">/usr/local/bin/parser/symfony-parser/var/cache/dev</parameter>
+    <parameter key="kernel.logs_dir">/usr/local/bin/parser/symfony-parser/var/logs</parameter>
     <parameter key="kernel.bundles" type="collection">
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
       <parameter key="SecurityBundle">Symfony\Bundle\SecurityBundle\SecurityBundle</parameter>
@@ -50,7 +50,7 @@
       <parameter key="cookie_httponly">true</parameter>
       <parameter key="gc_probability">1</parameter>
     </parameter>
-    <parameter key="session.save_path">/usr/local/bin/parser/app/../var/sessions/dev</parameter>
+    <parameter key="session.save_path">/usr/local/bin/parser/symfony-parser/app/../var/sessions/dev</parameter>
     <parameter key="session.metadata.update_threshold">0</parameter>
     <parameter key="form.type_extension.csrf.enabled">true</parameter>
     <parameter key="form.type_extension.csrf.field_name">_token</parameter>
@@ -63,7 +63,7 @@
     <parameter key="validator.translation_domain">validators</parameter>
     <parameter key="profiler_listener.only_exceptions">false</parameter>
     <parameter key="profiler_listener.only_master_requests">false</parameter>
-    <parameter key="profiler.storage.dsn">file:/usr/local/bin/parser/var/cache/dev/profiler</parameter>
+    <parameter key="profiler.storage.dsn">file:/usr/local/bin/parser/symfony-parser/var/cache/dev/profiler</parameter>
     <parameter key="router.options.generator_class">Symfony\Component\Routing\Generator\UrlGenerator</parameter>
     <parameter key="router.options.generator_base_class">Symfony\Component\Routing\Generator\UrlGenerator</parameter>
     <parameter key="router.options.generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\PhpGeneratorDumper</parameter>
@@ -75,13 +75,13 @@
     <parameter key="router.request_context.host">localhost</parameter>
     <parameter key="router.request_context.scheme">http</parameter>
     <parameter key="router.request_context.base_url"></parameter>
-    <parameter key="router.resource">/usr/local/bin/parser/app/config/routing_dev.yml</parameter>
+    <parameter key="router.resource">/usr/local/bin/parser/symfony-parser/app/config/routing_dev.yml</parameter>
     <parameter key="router.cache_class_prefix">appDev</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
     <parameter key="serializer.mapping.cache.prefix"></parameter>
     <parameter key="debug.error_handler.throw_at">-1</parameter>
-    <parameter key="debug.container.dump">/usr/local/bin/parser/var/cache/dev/appDevDebugProjectContainer.xml</parameter>
+    <parameter key="debug.container.dump">/usr/local/bin/parser/symfony-parser/var/cache/dev/appDevDebugProjectContainer.xml</parameter>
     <parameter key="security.authentication.trust_resolver.anonymous_class">Symfony\Component\Security\Core\Authentication\Token\AnonymousToken</parameter>
     <parameter key="security.authentication.trust_resolver.rememberme_class">Symfony\Component\Security\Core\Authentication\Token\RememberMeToken</parameter>
     <parameter key="security.role_hierarchy.roles" type="collection"/>
@@ -177,7 +177,7 @@
     <parameter key="swiftmailer.mailer.default.transport.smtp.auth_mode">null</parameter>
     <parameter key="swiftmailer.mailer.default.transport.smtp.timeout">30</parameter>
     <parameter key="swiftmailer.mailer.default.transport.smtp.source_ip">null</parameter>
-    <parameter key="swiftmailer.spool.default.memory.path">/usr/local/bin/parser/var/cache/dev/swiftmailer/spool/default</parameter>
+    <parameter key="swiftmailer.spool.default.memory.path">/usr/local/bin/parser/symfony-parser/var/cache/dev/swiftmailer/spool/default</parameter>
     <parameter key="swiftmailer.mailer.default.spool.enabled">true</parameter>
     <parameter key="swiftmailer.mailer.default.plugin.impersonate">null</parameter>
     <parameter key="swiftmailer.mailer.default.single_address">null</parameter>
@@ -295,7 +295,7 @@
     <parameter key="doctrine.orm.second_level_cache.cache_configuration.class">Doctrine\ORM\Cache\CacheConfiguration</parameter>
     <parameter key="doctrine.orm.second_level_cache.regions_configuration.class">Doctrine\ORM\Cache\RegionsConfiguration</parameter>
     <parameter key="doctrine.orm.auto_generate_proxy_classes">true</parameter>
-    <parameter key="doctrine.orm.proxy_dir">/usr/local/bin/parser/var/cache/dev/doctrine/orm/Proxies</parameter>
+    <parameter key="doctrine.orm.proxy_dir">/usr/local/bin/parser/symfony-parser/var/cache/dev/doctrine/orm/Proxies</parameter>
     <parameter key="doctrine.orm.proxy_namespace">Proxies</parameter>
     <parameter key="sensio_framework_extra.view.guesser.class">Sensio\Bundle\FrameworkExtraBundle\Templating\TemplateGuesser</parameter>
     <parameter key="sensio_framework_extra.controller.listener.class">Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener</parameter>
@@ -518,7 +518,7 @@
               <service class="Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinder" public="false">
                 <argument type="service" id="kernel"/>
                 <argument type="service" id="templating.filename_parser"/>
-                <argument>/usr/local/bin/parser/app/Resources</argument>
+                <argument>/usr/local/bin/parser/symfony-parser/app/Resources</argument>
               </service>
             </argument>
             <argument type="service" id="templating.locator"/>
@@ -545,7 +545,7 @@
               <service class="Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinder" public="false">
                 <argument type="service" id="kernel"/>
                 <argument type="service" id="templating.filename_parser"/>
-                <argument>/usr/local/bin/parser/app/Resources</argument>
+                <argument>/usr/local/bin/parser/symfony-parser/app/Resources</argument>
               </service>
             </argument>
             <argument type="collection"/>
@@ -558,7 +558,7 @@
             <argument type="service">
               <service class="Symfony\Bundle\TwigBundle\TemplateIterator" public="false">
                 <argument type="service" id="kernel"/>
-                <argument>/usr/local/bin/parser/app</argument>
+                <argument>/usr/local/bin/parser/symfony-parser/app</argument>
                 <argument type="collection"/>
               </service>
             </argument>
@@ -590,10 +590,10 @@
               <argument type="service">
                 <service class="Symfony\Component\Cache\Adapter\AdapterInterface" public="false">
                   <tag name="cache.pool"/>
-                  <argument>2+ZrHTCLjk</argument>
+                  <argument>+Um915er1e</argument>
                   <argument>0</argument>
-                  <argument>vfJF1Y06UEq1I1w5e8bhew</argument>
-                  <argument>/usr/local/bin/parser/var/cache/dev/pools</argument>
+                  <argument>99FEQMUUXKCa73oYrD0+lw</argument>
+                  <argument>/usr/local/bin/parser/symfony-parser/var/cache/dev/pools</argument>
                   <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
                   <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
                 </service>
@@ -603,10 +603,10 @@
               <argument type="service">
                 <service class="Symfony\Component\Cache\Adapter\AdapterInterface" public="false">
                   <tag name="cache.pool"/>
-                  <argument>zIwNiYGbu+</argument>
+                  <argument>iEPcUflkhh</argument>
                   <argument>0</argument>
-                  <argument>vfJF1Y06UEq1I1w5e8bhew</argument>
-                  <argument>/usr/local/bin/parser/var/cache/dev/pools</argument>
+                  <argument>99FEQMUUXKCa73oYrD0+lw</argument>
+                  <argument>/usr/local/bin/parser/symfony-parser/var/cache/dev/pools</argument>
                   <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
                   <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
                 </service>
@@ -624,7 +624,7 @@
     <service id="filesystem" class="Symfony\Component\Filesystem\Filesystem"/>
     <service id="file_locator" class="Symfony\Component\HttpKernel\Config\FileLocator">
       <argument type="service" id="kernel"/>
-      <argument>/usr/local/bin/parser/app/Resources</argument>
+      <argument>/usr/local/bin/parser/symfony-parser/app/Resources</argument>
     </service>
     <service id="uri_signer" class="Symfony\Component\HttpKernel\UriSigner">
       <argument>e201ed815273cdd61ba5f4788db9c050192ca7dd</argument>
@@ -739,7 +739,7 @@
         </argument>
       </argument>
       <argument type="collection">
-        <argument key="cache_dir">/usr/local/bin/parser/var/cache/dev/translations</argument>
+        <argument key="cache_dir">/usr/local/bin/parser/symfony-parser/var/cache/dev/translations</argument>
         <argument key="debug">true</argument>
       </argument>
       <argument type="collection"/>
@@ -926,19 +926,19 @@
     </service>
     <service id="cache.app" class="Symfony\Component\Cache\Adapter\FilesystemAdapter">
       <tag name="cache.pool"/>
-      <argument>wfsZgbwuFm</argument>
+      <argument>hPBvX8dfQd</argument>
       <argument>0</argument>
-      <argument>/usr/local/bin/parser/var/cache/dev/pools</argument>
+      <argument>/usr/local/bin/parser/symfony-parser/var/cache/dev/pools</argument>
       <call method="setLogger">
         <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       </call>
     </service>
     <service id="cache.system" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
-      <argument>YMjmGolR6C</argument>
+      <argument>x0qB3eKmMP</argument>
       <argument>0</argument>
-      <argument>vfJF1Y06UEq1I1w5e8bhew</argument>
-      <argument>/usr/local/bin/parser/var/cache/dev/pools</argument>
+      <argument>99FEQMUUXKCa73oYrD0+lw</argument>
+      <argument>/usr/local/bin/parser/symfony-parser/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1195,7 +1195,7 @@
     <service id="templating.filename_parser" class="Symfony\Bundle\FrameworkBundle\Templating\TemplateFilenameParser"/>
     <service id="templating.locator" class="Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator" public="false">
       <argument type="service" id="file_locator"/>
-      <argument>/usr/local/bin/parser/var/cache/dev</argument>
+      <argument>/usr/local/bin/parser/symfony-parser/var/cache/dev</argument>
     </service>
     <service id="validator" class="Symfony\Component\Validator\Validator\ValidatorInterface">
       <factory service="validator.builder" method="getValidator"/>
@@ -1225,7 +1225,7 @@
       </call>
       <call method="addXmlMappings">
         <argument type="collection">
-          <argument>/usr/local/bin/parser/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/config/validation.xml</argument>
+          <argument>/usr/local/bin/parser/symfony-parser/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/config/validation.xml</argument>
         </argument>
       </call>
       <call method="enableAnnotationMapping">
@@ -1257,7 +1257,7 @@
       <tag name="monolog.logger" channel="profiler"/>
       <argument type="service">
         <service class="Symfony\Component\HttpKernel\Profiler\FileProfilerStorage" public="false">
-          <argument>file:/usr/local/bin/parser/var/cache/dev/profiler</argument>
+          <argument>file:/usr/local/bin/parser/symfony-parser/var/cache/dev/profiler</argument>
         </service>
       </argument>
       <argument type="service" id="monolog.logger.profiler" on-invalid="null"/>
@@ -1836,7 +1836,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>58047c6d05d0c9.95022441</argument>
+            <argument>5804cbaddf5b47.77481293</argument>
           </service>
         </argument>
       </argument>
@@ -1970,7 +1970,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>58047c6d05d0c9.95022441</argument>
+            <argument>5804cbaddf5b47.77481293</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2016,7 +2016,7 @@
           <argument>form_div_layout.html.twig</argument>
         </argument>
         <argument key="autoescape">filename</argument>
-        <argument key="cache">/usr/local/bin/parser/var/cache/dev/twig</argument>
+        <argument key="cache">/usr/local/bin/parser/symfony-parser/var/cache/dev/twig</argument>
         <argument key="charset">UTF-8</argument>
         <argument key="paths" type="collection"/>
         <argument key="date" type="collection">
@@ -2076,7 +2076,7 @@
           <service class="Symfony\Bridge\Twig\Extension\CodeExtension" public="false">
             <tag name="twig.extension"/>
             <argument>null</argument>
-            <argument>/usr/local/bin/parser/app</argument>
+            <argument>/usr/local/bin/parser/symfony-parser/app</argument>
             <argument>UTF-8</argument>
           </service>
         </argument>
@@ -2230,7 +2230,7 @@
       <argument>twig.controller.exception:showAction</argument>
     </service>
     <service id="monolog.handler.main" class="Monolog\Handler\StreamHandler">
-      <argument>/usr/local/bin/parser/var/logs/dev.log</argument>
+      <argument>/usr/local/bin/parser/symfony-parser/var/logs/dev.log</argument>
       <argument>100</argument>
       <argument>true</argument>
       <argument>null</argument>
@@ -2334,17 +2334,17 @@
     </service>
     <service id="doctrine_cache.providers.doctrine.orm.default_metadata_cache" class="Doctrine\Common\Cache\ArrayCache">
       <call method="setNamespace">
-        <argument>sf2orm_default_b05d965047d46965eefbfb529de6c92d7dff64a2bd61d5b5ea608dd235514788</argument>
+        <argument>sf2orm_default_2e953d8dcb5d0344e0c2637cd37e07bbdd415fbadc6804b2364048014bc41108</argument>
       </call>
     </service>
     <service id="doctrine_cache.providers.doctrine.orm.default_result_cache" class="Doctrine\Common\Cache\ArrayCache">
       <call method="setNamespace">
-        <argument>sf2orm_default_b05d965047d46965eefbfb529de6c92d7dff64a2bd61d5b5ea608dd235514788</argument>
+        <argument>sf2orm_default_2e953d8dcb5d0344e0c2637cd37e07bbdd415fbadc6804b2364048014bc41108</argument>
       </call>
     </service>
     <service id="doctrine_cache.providers.doctrine.orm.default_query_cache" class="Doctrine\Common\Cache\ArrayCache">
       <call method="setNamespace">
-        <argument>sf2orm_default_b05d965047d46965eefbfb529de6c92d7dff64a2bd61d5b5ea608dd235514788</argument>
+        <argument>sf2orm_default_2e953d8dcb5d0344e0c2637cd37e07bbdd415fbadc6804b2364048014bc41108</argument>
       </call>
     </service>
     <service id="doctrine.orm.default_entity_listener_resolver" class="Doctrine\ORM\Mapping\DefaultEntityListenerResolver"/>
@@ -2381,7 +2381,7 @@
                     <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
                       <argument type="service" id="annotation_reader"/>
                       <argument type="collection">
-                        <argument>/usr/local/bin/parser/src/CoreBundle/Entity</argument>
+                        <argument>/usr/local/bin/parser/symfony-parser/src/CoreBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
@@ -2391,7 +2391,7 @@
             </argument>
           </call>
           <call method="setProxyDir">
-            <argument>/usr/local/bin/parser/var/cache/dev/doctrine/orm/Proxies</argument>
+            <argument>/usr/local/bin/parser/symfony-parser/var/cache/dev/doctrine/orm/Proxies</argument>
           </call>
           <call method="setProxyNamespace">
             <argument>Proxies</argument>
@@ -3038,12 +3038,12 @@
       <argument type="service" id="validator"/>
     </service>
     <service id="session.storage.filesystem" class="Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage">
-      <argument>/usr/local/bin/parser/var/cache/dev/sessions</argument>
+      <argument>/usr/local/bin/parser/symfony-parser/var/cache/dev/sessions</argument>
       <argument>MOCKSESSID</argument>
       <argument type="service" id="session.storage.metadata_bag"/>
     </service>
     <service id="session.handler" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler">
-      <argument>/usr/local/bin/parser/app/../var/sessions/dev</argument>
+      <argument>/usr/local/bin/parser/symfony-parser/app/../var/sessions/dev</argument>
     </service>
     <service id="templating.loader" class="Symfony\Bundle\FrameworkBundle\Templating\Loader\FilesystemLoader">
       <argument type="service" id="templating.locator"/>
@@ -3062,9 +3062,9 @@
     <service id="router" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
       <tag name="monolog.logger" channel="router"/>
       <argument type="service" id="service_container"/>
-      <argument>/usr/local/bin/parser/app/config/routing_dev.yml</argument>
+      <argument>/usr/local/bin/parser/symfony-parser/app/config/routing_dev.yml</argument>
       <argument type="collection">
-        <argument key="cache_dir">/usr/local/bin/parser/var/cache/dev</argument>
+        <argument key="cache_dir">/usr/local/bin/parser/symfony-parser/var/cache/dev</argument>
         <argument key="debug">true</argument>
         <argument key="generator_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
         <argument key="generator_base_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
@@ -3090,7 +3090,7 @@
       </argument>
       <argument type="service">
         <service class="Doctrine\Common\Cache\FilesystemCache" public="false">
-          <argument>/usr/local/bin/parser/var/cache/dev/annotations</argument>
+          <argument>/usr/local/bin/parser/symfony-parser/var/cache/dev/annotations</argument>
         </service>
       </argument>
       <argument>true</argument>
@@ -3108,46 +3108,46 @@
       <argument type="service" id="templating.locator"/>
       <argument type="service" id="templating.name_parser"/>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views</argument>
         <argument>Framework</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views</argument>
         <argument>Security</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views</argument>
         <argument>Twig</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/symfony/swiftmailer-bundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/symfony/swiftmailer-bundle/Resources/views</argument>
         <argument>Swiftmailer</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/doctrine/doctrine-bundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/doctrine/doctrine-bundle/Resources/views</argument>
         <argument>Doctrine</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/nelmio/api-doc-bundle/Nelmio/ApiDocBundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/nelmio/api-doc-bundle/Nelmio/ApiDocBundle/Resources/views</argument>
         <argument>NelmioApiDoc</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/src/CoreBundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/src/CoreBundle/Resources/views</argument>
         <argument>Core</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
         <argument>Debug</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>
         <argument>WebProfiler</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/app/Resources/views</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/app/Resources/views</argument>
       </call>
       <call method="addPath">
-        <argument>/usr/local/bin/parser/vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form</argument>
+        <argument>/usr/local/bin/parser/symfony-parser/vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form</argument>
       </call>
     </service>
     <service id="swiftmailer.mailer.default.transport" class="Swift_Transport_SpoolTransport">

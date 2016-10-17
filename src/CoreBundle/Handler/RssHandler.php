@@ -89,4 +89,29 @@ class RssHandler
 
     }
 
+    /**
+     * @param string $id_rss
+     */
+    public function deleteRSS($id_rss)
+    {
+
+        $object_manager = $this->doctrine->getEntityManager();
+
+        $repository = $this->doctrine->getRepository('CoreBundle:Rss');
+
+        $rss = $repository->findOneBy(array(
+            'id' => $id_rss
+        ));
+
+        foreach ($rss->getChannels() as $channel){
+
+            $object_manager->remove($channel);
+
+        }
+
+        $object_manager->remove($rss);
+        $object_manager->flush();
+
+    }
+
 }
