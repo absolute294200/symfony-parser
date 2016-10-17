@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+foreach( [__DIR__.'/../vendor/autoload.php',  __DIR__.'/../../../autoload.php'] as $file ) {
+    if ( file_exists($file) ) {
+        require $file;
+    }
+}
+
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$application->setName('feed-io : the CLI feed reader');
+
+$application->add(new \FeedIo\Command\ReadCommand());
+
+$application->run();
