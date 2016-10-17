@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - symfony@127.0.0.1">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6"/>
+</dataSource>

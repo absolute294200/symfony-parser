@@ -1,0 +1,23 @@
+services:
+    core.handler.user:
+        class: CoreBundle\Handler\UserHandler
+        arguments:
+          - "@doctrine"
+
+    core.handler.rss:
+            class: CoreBundle\Handler\RssHandler
+            arguments:
+              - "@doctrine"
+
+    core.handler.user_rss:
+                class: CoreBundle\Handler\UserRssHandler
+                arguments:
+                  - "@doctrine"
+
+    core.handler.feed:
+            class: CoreBundle\Handler\FeedHandler
+            arguments:
+              - "@doctrine"
+              - "@feedio"
+              - "@core.handler.rss"
+

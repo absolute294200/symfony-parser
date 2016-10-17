@@ -1,0 +1,14 @@
+blog-api-users:
+    type: rest
+    resource: "@AppBundle/Controller/RestUserController.php"
+    name_prefix: api_users_
+
+blog-api-rss:
+    type: rest
+    resource: "@AppBundle/Controller/RestRssController.php"
+    name_prefix: api_rss_
+
+blog-api-feed:
+    type: rest
+    resource: "@AppBundle/Controller/RestFeedController.php"
+    name_prefix: api_feed_
