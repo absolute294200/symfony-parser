@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new CoreBundle\CoreBundle(),
-            new Debril\RssAtomBundle\DebrilRssAtomBundle(),
+            new Debril\RssAtomBundle\DebrilRssAtomBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

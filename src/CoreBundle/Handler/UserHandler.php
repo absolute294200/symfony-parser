@@ -3,9 +3,12 @@
 namespace CoreBundle\Handler;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use CoreBundle\Entity\User;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserHandler
 {
@@ -98,6 +101,9 @@ class UserHandler
         $user = $repository->findOneBy(array(
             'token' => $token
         ));
+
+        if(!$user)
+            throw new \Exception('Non authorized', Response::HTTP_UNAUTHORIZED);
 
         return $user;
 

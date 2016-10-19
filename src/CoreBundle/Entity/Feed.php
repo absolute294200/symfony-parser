@@ -22,13 +22,6 @@ class Feed
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_channel", type="integer")
-     */
-    private $idChannel;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -50,6 +43,12 @@ class Feed
     private $description;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Rss", inversedBy="channels", cascade={"all"})
+     * @ORM\JoinColumn(name="rss_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     */
+    private $rss;
+
+    /**
      * Get id
      *
      * @return int
@@ -59,29 +58,6 @@ class Feed
         return $this->id;
     }
 
-    /**
-     * Set idChannel
-     *
-     * @param integer $idChannel
-     *
-     * @return Feed
-     */
-    public function setIdChannel($idChannel)
-    {
-        $this->idChannel = $idChannel;
-
-        return $this;
-    }
-
-    /**
-     * Get idChannel
-     *
-     * @return int
-     */
-    public function getIdChannel()
-    {
-        return $this->idChannel;
-    }
 
     /**
      * Set name
@@ -153,6 +129,24 @@ class Feed
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRss()
+    {
+        return $this->rss;
+    }
+
+    /**
+     * @param mixed $rss
+     * @return UserRss
+     */
+    public function setRss($rss)
+    {
+        $this->rss = $rss;
+        return $this;
     }
 
 

@@ -29,7 +29,7 @@ class UserRssHandler
     }
 
 
-    public function createUserRss(User $user = null, Rss $rss = null)
+    public function createUserRss(User $user = null, Rss $rss = null) :Rss
     {
 
         $objectManager = $this->doctrine->getManager();
@@ -42,7 +42,7 @@ class UserRssHandler
 
         $objectManager->flush();
 
-        return $user_rss;
+        return $rss;
 
     }
 

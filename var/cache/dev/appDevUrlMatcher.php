@@ -109,53 +109,6 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
         }
 
-        // app_restfeed_getupdatefeeds
-        if ($pathinfo === '/feeds/update') {
-            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'HEAD'));
-                goto not_app_restfeed_getupdatefeeds;
-            }
-
-            return array (  '_controller' => 'AppBundle\\Controller\\RestFeedController::getUpdateFeedsAction',  '_route' => 'app_restfeed_getupdatefeeds',);
-        }
-        not_app_restfeed_getupdatefeeds:
-
-        if (0 === strpos($pathinfo, '/rss')) {
-            // app_restrss_getrss
-            if ($pathinfo === '/rss') {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_app_restrss_getrss;
-                }
-
-                return array (  '_controller' => 'AppBundle\\Controller\\RestRssController::getRssAction',  '_route' => 'app_restrss_getrss',);
-            }
-            not_app_restrss_getrss:
-
-            // app_restrss_postrss
-            if ($pathinfo === '/rss') {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_app_restrss_postrss;
-                }
-
-                return array (  '_controller' => 'AppBundle\\Controller\\RestRssController::postRssAction',  '_route' => 'app_restrss_postrss',);
-            }
-            not_app_restrss_postrss:
-
-            // app_restrss_postrssdelete
-            if ($pathinfo === '/rss/delete') {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_app_restrss_postrssdelete;
-                }
-
-                return array (  '_controller' => 'AppBundle\\Controller\\RestRssController::postRssDeleteAction',  '_route' => 'app_restrss_postrssdelete',);
-            }
-            not_app_restrss_postrssdelete:
-
-        }
-
         // app_restuser_postlogin
         if ($pathinfo === '/login') {
             if ($this->context->getMethod() != 'POST') {
@@ -237,7 +190,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     not_api_rss_get_rss:
 
                     // api_rss_post_rss
-                    if (preg_match('#^/api/rss(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                    if (0 === strpos($pathinfo, '/api/rsses') && preg_match('#^/api/rsses(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
                         if ($this->context->getMethod() != 'POST') {
                             $allow[] = 'POST';
                             goto not_api_rss_post_rss;
@@ -247,45 +200,42 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     }
                     not_api_rss_post_rss:
 
-                    // api_rss_post_rss_delete
-                    if (0 === strpos($pathinfo, '/api/rss/delete') && preg_match('#^/api/rss/delete(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
-                        if ($this->context->getMethod() != 'POST') {
-                            $allow[] = 'POST';
-                            goto not_api_rss_post_rss_delete;
+                    // api_rss_delete_rss
+                    if (preg_match('#^/api/rss(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                        if ($this->context->getMethod() != 'DELETE') {
+                            $allow[] = 'DELETE';
+                            goto not_api_rss_delete_rss;
                         }
 
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_rss_post_rss_delete')), array (  '_controller' => 'AppBundle\\Controller\\RestRssController::postRssDeleteAction',  '_format' => NULL,));
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_rss_delete_rss')), array (  '_controller' => 'AppBundle\\Controller\\RestRssController::deleteRssAction',  '_format' => NULL,));
                     }
-                    not_api_rss_post_rss_delete:
+                    not_api_rss_delete_rss:
 
                 }
 
             }
 
-            if (0 === strpos($pathinfo, '/api/feed')) {
-                // api_feed_get_feed
-                if (preg_match('#^/api/feed(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
-                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'HEAD'));
-                        goto not_api_feed_get_feed;
-                    }
-
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_feed_get_feed')), array (  '_controller' => 'AppBundle\\Controller\\RestFeedController::getFeedAction',  '_format' => NULL,));
+            // api_feed_get_feed
+            if (0 === strpos($pathinfo, '/api/feed') && preg_match('#^/api/feed(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_feed_get_feed;
                 }
-                not_api_feed_get_feed:
 
-                // api_feed_get_update_feeds
-                if (0 === strpos($pathinfo, '/api/feeds/update') && preg_match('#^/api/feeds/update(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
-                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                        $allow = array_merge($allow, array('GET', 'HEAD'));
-                        goto not_api_feed_get_update_feeds;
-                    }
-
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_feed_get_update_feeds')), array (  '_controller' => 'AppBundle\\Controller\\RestFeedController::getUpdateFeedsAction',  '_format' => NULL,));
-                }
-                not_api_feed_get_update_feeds:
-
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_feed_get_feed')), array (  '_controller' => 'AppBundle\\Controller\\RestFeedController::getFeedAction',  '_format' => NULL,));
             }
+            not_api_feed_get_feed:
+
+            // api_feed_put_update_feeds
+            if (0 === strpos($pathinfo, '/api/update/feeds') && preg_match('#^/api/update/feeds(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if ($this->context->getMethod() != 'PUT') {
+                    $allow[] = 'PUT';
+                    goto not_api_feed_put_update_feeds;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_feed_put_update_feeds')), array (  '_controller' => 'AppBundle\\Controller\\RestFeedController::putUpdateFeedsAction',  '_format' => NULL,));
+            }
+            not_api_feed_put_update_feeds:
 
         }
 

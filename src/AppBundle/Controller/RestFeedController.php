@@ -6,6 +6,7 @@ use FeedIo\FeedIo;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\FOSRestBundle;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Feed;
 use CoreBundle\Form\FeedType;
@@ -38,20 +39,23 @@ class RestFeedController extends FOSRestController
 
         $token = $request->headers->get('X-AUTH-TOKEN');
 
-        $id_user = $this->get('core.handler.user')
-            ->getIdByToken($token);
+        try{
 
-        if($id_user){
+            $user = $this->get('core.handler.user')
+                ->getUserByToken($token);
 
             $id_rss = $request->query->get('id_rss');
 
-            return $this->get('core.handler.feed')->getFeeds($id_rss);
+            return $this->get('core.handler.feed')->getFeeds($id_rss, $user);
 
-        }else{
+        }catch (\Exception $throwed_error){
 
-            return array('auth' => false);
+            return new JsonResponse($throwed_error->getMessage(), $throwed_error->getCode());
 
         }
+
+
+
 
     }
 
@@ -69,16 +73,13 @@ class RestFeedController extends FOSRestController
      *      {"name"="another-filter", "dataType"="string", "pattern"="(foo|bar) ASC|DESC"}
      *  }
      * )
-     * @Annotations\Get("/feeds/update")
      */
 
-    public function getUpdateFeedsAction()
+    public function putUpdateFeedsAction()
     {
+            $updated_feeds = $this->get('core.handler.feed')->updateFeeds();
 
-
-            $this->get('core.handler.feed')->updateFeeds();
-
-            return array('success_updating' => 1);
+            return array('updated_feeds' => $updated_feeds);
 
     }
 

@@ -24,25 +24,16 @@ class UserRss
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="channels", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="channels", cascade={"all"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Rss", inversedBy="channels", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="rss_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Rss", inversedBy="channels", cascade={"all"})
+     * @ORM\JoinColumn(name="rss_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     private $rss;
-
-    function __construct()
-    {
-
-        $this->user = new User();
-
-        $this->rss = new Rss();
-
-    }
 
 
     /**

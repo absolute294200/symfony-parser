@@ -2,7 +2,9 @@
 
 namespace CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Rss
@@ -35,17 +37,6 @@ class Rss
      */
     private $url;
 
-    /**
-     * @ORM\OneToMany(targetEntity="UserRss", mappedBy="rss")
-     */
-    private $channels;
-
-    public function __construct()
-    {
-
-        $this->channels = new ArrayCollection();
-
-    }
 
     /**
      * Get id
@@ -105,31 +96,8 @@ class Rss
         return $this->url;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getChannels()
-    {
-        return $this->channels;
-    }
 
-    /**
-     * @param mixed $channels
-     * @return Rss
-     */
-    public function setChannels($channels)
-    {
-        $this->channels = $channels;
-        return $this;
-    }
 
-    /**
-     * @param UserRss $channels
-     */
-    public function deleteChannel(UserRss $channel)
-    {
-        $this->channels->remove($channel);
-    }
 
 
 

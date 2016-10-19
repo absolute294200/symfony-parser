@@ -2,6 +2,7 @@
 
 namespace CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,11 +42,6 @@ class User
      * @ORM\Column(name="token", type="string", length=50, nullable=true)
      */
     private $token;
-
-    /**
-     * @ORM\OneToMany(targetEntity="UserRss", mappedBy="user")
-     */
-    private $channels;
 
 
     /**
@@ -130,23 +126,6 @@ class User
         return $this->token;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getChannels()
-    {
-        return $this->channels;
-    }
-
-    /**
-     * @param mixed $channels
-     * @return User
-     */
-    public function setChannels($channels)
-    {
-        $this->channels = $channels;
-        return $this;
-    }
 
 
 }

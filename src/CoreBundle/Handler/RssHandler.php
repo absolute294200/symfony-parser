@@ -2,6 +2,9 @@
 
 namespace CoreBundle\Handler;
 
+use CoreBundle\Entity\User;
+use CoreBundle\Entity\UserRss;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -22,7 +25,7 @@ class RssHandler
         $this->doctrine = $doctrine;
     }
 
-    public function checkUniqueUrl(Rss $rss) : Rss
+    public function getUniqueRSS(Rss $rss) : Rss
     {
 
         $repository = $this->doctrine->getRepository('CoreBundle:Rss');
@@ -55,44 +58,52 @@ class RssHandler
 
     }
 
-    public function getAllRss(){
+    /**
+     * @return RSS[]
+     */
+    public function getAllRss()
+    {
 
         $repository = $this->doctrine->getRepository('CoreBundle:Rss');
 
         $rss_array = $repository->findAll();
 
-        $channels_array = array();
-
-        foreach ($rss_array as $channel){
-
-            $channels_array[] = array('id' => $channel->getId(),
-                                      'url' => $channel->getUrl());
-
-        }
-
-        return $channels_array;
+        return $rss_array;
 
     }
 
-    public function getRssByIdUser($id_user)
+    public function getRssByUser(User $user)
     {
 
-        return $this->doctrine->getEntityManager()
-                              ->createQueryBuilder()
-                              ->select('rss.id', 'rss.url', 'rss.name')
-                              ->from('CoreBundle:Rss', 'rss')
-                              ->innerJoin('CoreBundle:UserRss', 'user_rss', 'WITH', 'rss.id = user_rss.idRss')
-                              ->where('user_rss.idUser = :id_user')
-                              ->setParameter('id_user', $id_user)
-                              ->getQuery()
-                              ->getResult();
+        $userRss = $this->doctrine->getEntityManager()
+                          ->getRepository('CoreBundle:UserRss')
+                          ->findBy(['user' => $user]);
+        if(!$userRss)
+            throw new \Exception("Not found", 404);
+
+        $rss = array();
+
+        foreach ($userRss as $item){
+
+            $rss[] = $item->getRss();
+
+        }
+
+        if(!$rss)
+            throw new \Exception("", 204);
+
+
+        return $rss;
 
     }
 
     /**
      * @param string $id_rss
+     * @param User $user
+     * @return int
+     * @throws \Exception
      */
-    public function deleteRSS($id_rss)
+    public function deleteRSS($id_rss, User $user)
     {
 
         $object_manager = $this->doctrine->getEntityManager();
@@ -103,14 +114,23 @@ class RssHandler
             'id' => $id_rss
         ));
 
-        foreach ($rss->getChannels() as $channel){
+        $rss_user = $this->doctrine->getRepository('CoreBundle:UserRss')->findOneBy([
+            'rss' => $rss,
+            'user' => $user
+        ]);
 
-            $object_manager->remove($channel);
+        if(!$rss_user)
+            throw new \Exception("Not found", 404);
+        else{
+
+            $object_manager->remove($rss);
+
+            $object_manager->flush();
 
         }
 
-        $object_manager->remove($rss);
-        $object_manager->flush();
+        return 1;
+
 
     }
 

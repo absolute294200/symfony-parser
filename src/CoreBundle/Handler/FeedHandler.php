@@ -2,11 +2,12 @@
 
 namespace CoreBundle\Handler;
 
-use FeedIo\FeedIo;
+use CoreBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use CoreBundle\Entity\Feed;
+use FeedIo\FeedIo;
 
 
 class FeedHandler
@@ -21,7 +22,6 @@ class FeedHandler
     /**
      * @var \FeedIo\FeedIo
      */
-
     private $feedIO;
 
     /**
@@ -33,7 +33,7 @@ class FeedHandler
     /**
      * FeedHandler constructor.
      * @param \Symfony\Bridge\Doctrine\RegistryInterface $doctrine
-     * @param FeedIo $feedIO
+     * @internal param FeedIo $feedIO
      * @param RssHandler $rss
      */
     public function __construct(\Symfony\Bridge\Doctrine\RegistryInterface $doctrine, FeedIo $feedIO, RssHandler $rss)
@@ -46,16 +46,33 @@ class FeedHandler
 
     /**
      * @param string $id_rss
+     * @param User $user
      * @return array
+     * @throws \Exception
      */
-    public function getFeeds(string $id_rss)
+    public function getFeeds(string $id_rss, User $user = null)
     {
+
+        $rss = $this->doctrine->getRepository('CoreBundle:Rss')->findOneBy([
+            'id' => $id_rss
+        ]);
+
+        $rss_user = $this->doctrine->getRepository('CoreBundle:UserRss')->findOneBy([
+            'rss' => $rss,
+            'user' => $user
+        ]);
+
+        if(!$rss_user)
+            throw new \Exception("Not found", 404);
 
         $repository = $this->doctrine->getRepository('CoreBundle:Feed');
 
         $feed = $repository->findBy(array(
-            'idChannel' => $id_rss
+            'rss' => $rss_user->getRss()
         ));
+
+        if(!$feed)
+            throw new \Exception("", 204);
 
         return $feed;
     }
@@ -65,40 +82,43 @@ class FeedHandler
      */
     public function updateFeeds()
     {
+
         $rss_array = $this->rss->getAllRss();
 
         foreach ($rss_array as $channel){
 
             $modifiedSince = new \DateTime(date("Y-m-d H:i:s", strtotime("-1 day")));
 
-            $feeds = $this->feedIO->readSince($channel['url'], $modifiedSince)->getFeed();
+            $feeds = $this->feedIO->readSince($channel->getUrl(), $modifiedSince)->getFeed();
+
+            $i = 0;
 
             foreach ($feeds as $feed) {
 
-                $feed_array = array();
-
                 if($this->checkUniqueFeed($feed->getLink())){
 
-                    $feed_array = array(
+                    $feed_entity = new Feed();
 
-                        'link' => $feed->getLink(),
+                    $feed_entity->setLink($feed->getLink());
 
-                        'title' => $feed->getTitle(),
+                    $feed_entity->setName($feed->getTitle());
 
-                        'description' =>$feed->getDescription()
+                    $feed_entity->setDescription($feed->getDescription());
 
-                    );
+                    $feed_entity->setRss($channel);
 
-                    $this->saveFeed($feed_array, $channel['id']);
+                    $this->saveFeed($feed_entity);
+
+                    $i++;
+
 
                 }
-
 
             }
 
         }
 
-        return 1;
+        return $i;
     }
 
     /**
@@ -110,7 +130,7 @@ class FeedHandler
 
         $repository = $this->doctrine->getRepository('CoreBundle:Feed');
 
-        $feed = $repository->findBy(array(
+        $feed = $repository->findOneBy(array(
             'link' => $link
         ));
 
@@ -122,24 +142,14 @@ class FeedHandler
     }
 
     /**
-     * @param array $feed_info
+     * @param Feed $feed_info
      * @param integer $channel_id
      * @return boolean
      */
-    public function saveFeed($feed_info, $channel_id)
+    public function saveFeed(Feed $feed)
     {
 
         $objectManager = $this->doctrine->getManager();
-
-        $feed = new Feed();
-
-        $feed->setIdChannel($channel_id);
-
-        $feed->setName($feed_info['title']);
-
-        $feed->setDescription($feed_info['description']);
-
-        $feed->setLink($feed_info['link']);
 
         $objectManager->persist($feed);
 

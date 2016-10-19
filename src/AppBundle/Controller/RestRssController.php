@@ -2,13 +2,18 @@
 
 namespace AppBundle\Controller;
 
+use CoreBundle\Entity\UserRss;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\FOSRestBundle;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Rss;
 use CoreBundle\Form\RssType;
 use FOS\RestBundle\Controller\Annotations;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class RestRssController extends FOSRestController
@@ -24,7 +29,6 @@ class RestRssController extends FOSRestController
      *  section="RSS",
      *  description="Registration of user",
      * )
-     * @Annotations\Get("/rss")
      */
 
     public function getRssAction(Request $request)
@@ -38,21 +42,18 @@ class RestRssController extends FOSRestController
 
         $token = $request->headers->get('X-AUTH-TOKEN');
 
-        $id_user = $this->get('core.handler.user')
-                        ->getIdByToken($token);
+        try{
 
-        $user = $this->get('core.handler.user')
-            ->getUserByToken($token);
+            $user = $this->get('core.handler.user')
+                ->getUserByToken($token);
 
-        if($id_user){
-
-            $result = $this->get('core.handler.rss')->getRssByIdUser($id_user);
+            $result = $this->get('core.handler.rss')->getRssByUser($user);
 
             return array('result' => $result);
 
-        }else{
+        }catch (\Exception $throwed_error){
 
-            return array('auth' => false);
+            return new JsonResponse($throwed_error->getMessage(), $throwed_error->getCode());
 
         }
 
@@ -72,7 +73,6 @@ class RestRssController extends FOSRestController
      *    "name" = ""
      *  },
      * )
-     * @Annotations\Post("/rss")
      */
 
     public function postRssAction(Request $request)
@@ -86,22 +86,22 @@ class RestRssController extends FOSRestController
 
         $token = $request->headers->get('X-AUTH-TOKEN');
 
-        $user = $this->get('core.handler.user')
-            ->getUserByToken($token);
+        try{
 
-        if($user){
+            $user = $this->get('core.handler.user')
+                ->getUserByToken($token);
 
-            $result_rss = $this->get('core.handler.rss')->checkUniqueUrl($form->getData()); //check please $result_rss
+        }catch (\Exception $e){
 
-            $this->get('core.handler.user_rss')->createUserRss($user, $result_rss); //check please returned value
-
-            return array('user_rss' => 1);
-
-        }else{
-
-            return array('auth' => false);
+            return new JsonResponse('Non authorized', 401);
 
         }
+
+        $result_rss = $this->get('core.handler.rss')->getUniqueRSS($form->getData());
+
+        $rss = $this->get('core.handler.user_rss')->createUserRss($user, $result_rss);
+
+        return array('added_new_rss' => $rss->getName());
 
     }
 
@@ -126,30 +126,30 @@ class RestRssController extends FOSRestController
      *      {"name"="id_rss", "dataType"="integer", "required"=true, "description"="Id of rss"}
      *  }
      * )
-     * @Annotations\Post("/rss/delete")
      */
 
-    public function postRssDeleteAction(Request $request)
+    public function deleteRssAction(Request $request)
     {
 
         $id_rss = $request->request->get('id_rss');
 
         $token = $request->headers->get('X-AUTH-TOKEN');
 
-        $user = $this->get('core.handler.user')
-            ->getUserByToken($token);
+        try{
 
-        if($user){
+            $user = $this->get('core.handler.user')
+                ->getUserByToken($token);
 
-            $this->get('core.handler.rss')->deleteRSS($id_rss);
+            $this->get('core.handler.rss')->deleteRSS($id_rss, $user);
 
-            return array('delete' => 1);
+            return array('deleted' => 1);
 
-        }else{
+        }catch (\Exception $throwed_error){
 
-            return array('auth' => false);
+            return new JsonResponse($throwed_error->getMessage(), $throwed_error->getCode());
 
         }
+
 
     }
 

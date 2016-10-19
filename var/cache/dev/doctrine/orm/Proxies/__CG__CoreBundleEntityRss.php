@@ -64,10 +64,10 @@ class Rss extends \CoreBundle\Entity\Rss implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'id', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'name', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'url', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'channels'];
+            return ['__isInitialized__', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'id', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'name', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'url'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'id', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'name', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'url', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'channels'];
+        return ['__isInitialized__', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'id', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'name', '' . "\0" . 'CoreBundle\\Entity\\Rss' . "\0" . 'url'];
     }
 
     /**
@@ -230,28 +230,6 @@ class Rss extends \CoreBundle\Entity\Rss implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUrl', []);
 
         return parent::getUrl();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getChannels()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getChannels', []);
-
-        return parent::getChannels();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setChannels($channels)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setChannels', [$channels]);
-
-        return parent::setChannels($channels);
     }
 
 }
